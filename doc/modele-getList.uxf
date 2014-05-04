@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="11.5.1">
+  <zoom_level>10</zoom_level>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>610</x>
+      <y>70</y>
+      <w>160</w>
+      <h>140</h>
+    </coordinates>
+    <panel_attributes>ExportBO
+--
+env : string
+type-BO : string
+client-name : string
+AAAA : string
+MM : string
+part-name : string</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>330</x>
+      <y>70</y>
+      <w>120</w>
+      <h>90</h>
+    </coordinates>
+    <panel_attributes>KshCmd
+--
+pgr : string
+arg* : [string]
+to-string : string</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>310</x>
+      <y>260</y>
+      <w>160</w>
+      <h>50</h>
+    </coordinates>
+    <panel_attributes>C#
+--
+to-string =?</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>360</x>
+      <y>130</y>
+      <w>50</w>
+      <h>150</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>30;30;30;130</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>590</x>
+      <y>260</y>
+      <w>200</w>
+      <h>140</h>
+    </coordinates>
+    <panel_attributes>E#
+--
+env = "rec"
+type-BO = "016"
+client-name = "MAI"
+AAAA = "2012"
+MM = "03"
+part-name = "ECL-MAI-D"</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>440</x>
+      <y>220</y>
+      <w>170</w>
+      <h>70</h>
+    </coordinates>
+    <panel_attributes>lt=-&gt;
+produit</panel_attributes>
+    <additional_attributes>30;50;150;50</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>660</x>
+      <y>180</y>
+      <w>50</w>
+      <h>100</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;&lt;&lt;&lt;-</panel_attributes>
+    <additional_attributes>30;30;30;80</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>300</x>
+      <y>590</y>
+      <w>200</w>
+      <h>70</h>
+    </coordinates>
+    <panel_attributes>getListScript
+--
+exportBO* : [ExportBO]</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>300</x>
+      <y>470</y>
+      <w>200</w>
+      <h>70</h>
+    </coordinates>
+    <panel_attributes>KshScript
+--
+to-string* : [string]
+content : [string]</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>30</x>
+      <y>470</y>
+      <w>160</w>
+      <h>90</h>
+    </coordinates>
+    <panel_attributes>File
+--
+path : string
+name : string
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>590</x>
+      <y>470</y>
+      <w>200</w>
+      <h>70</h>
+    </coordinates>
+    <panel_attributes>KshStatement
+--
+to-string* : [string]</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>370</x>
+      <y>510</y>
+      <w>50</w>
+      <h>100</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>30;30;30;80</additional_attributes>
+  </element>
+</diagram>
