@@ -17,46 +17,70 @@ post: (?C isa :extracli.ksh/Cmd), (?C genere ?E), (?C pgr _), (?C arg-v _)"
                   :genere  ?E
                   :arg-v [(:type-BO E) (:AAAA E) (:MM E) (:client-name E) (str "ECL-" (:client-name E) "-" (:type-flux E)) (:env E)]} )))
 
-
+(defn KshScript=>Rule-1A
+"in : [?E]
+ pre: (?E isa ExportBO), (?E env _), (?E type-BO _), (?E client-name _), (?E AAAA _), (?E MM _), (?E type-flux _)
+ out: [?C], ?M
+post: (?C :isa Cmd), (?C pgr _), (?C arg-v _)
+      (?M :isa Mapping), (?M :in [?C]), (?M :kb-relation :genere), (?M :out [?E])"
+  [KB ?E* ?C* ?M]
 (comment
-(defn KshScript=>Rule-1
-"args: [?E], ?S
+  (KshCmd=>Rule-1 KB ?E
+"in : ?E
  pre: (?E isa ExportBO), (?E env _), (?E type-BO _), (?E client-name _), (?E AAAA _), (?E MM _), (?E type-flux _)
-      (?S isa :none)
-post: (?S isa :extracli.ksh/Script), (?S genere-v [?E]), (?S to-string-v _)"
-  [KB ?E* ?S])
-
-;pour tout E:
-
-(KshCmd=>Rule-1 KB ?E
-"args: ?E, ?C
- pre: (?E isa ExportBO), (?E env _), (?E type-BO _), (?E client-name _), (?E AAAA _), (?E MM _), (?E type-flux _)
-      (?C isa :none)
+ out: ?C
 post: (?C isa :extracli.ksh/Cmd), (?C genere ?E), (?C pgr _), (?C arg-v _)")
 
-;pour tout C:
+  )
+  )
 
-(Cmd=>Rule-1 KB ?C
+(defn KshScript=>Rule-1B
+"in : [?C], ?M
+ pre: (?C :isa Cmd), (?C pgr _), (?C arg-v _)
+      (?M :isa Mapping), (?M :in [?C]), (?M :kb-relation :genere), (?M :out [?E])
+ out: ?S
+post: (?S :isa Script), (?S :genere-v [?E]), (?S to-string-v _)"
+  [KB ?C* ?M ?S]
+(comment
+
+  (Cmd=>Rule-1 KB ?C
 "args: ?C
  pre: (?C isa Cmd), (?C pgr _), (?C arg-v _)
 post: (?C to-string _)")
 
-(Script=>Rule-3 KB ?S ?C*
+  (Script=>Rule-3 KB ?S ?C*
 "args: ?S [?C]
  pre: (?C isa Cmd), (?S isa :none)
 post: (?S isa Script), (?S cmd-v [?C])")
 
-(Script=>Rule-2 KB ?S
-"args: ?S
- pre: (?S isa Script), (?S cmd-v [?C]), (?C genere ?G)
-post: (?S genere-v [?G])")
-
-(Script=>Rule-1 KB ?S
+  (Script=>Rule-1 KB ?S
 "args: ?S
  pre: (?S isa Script), (?S cmd-v [?C]), (?C to-string _)
-post: (?S to-string-v _)"
+post: (?S to-string-v _)")
+
+(Script=>Rule-2 KB ?S
+"in : ?S
+ pre: (?S isa Script), (?S cmd-v [?C]), (?C genere _)
+ out: ?M
+post: (?M :isa Mapping), (?M :in [?C]), (?M :kb-relation :genere), (?M :out [?G])
+      (?S genere-v [?G])")
 
   )
+  )
+
+(defn KshScript=>Rule-1
+"in : [?E]
+ pre: (?E isa ExportBO), (?E env _), (?E type-BO _), (?E client-name _), (?E AAAA _), (?E MM _), (?E type-flux _)
+ out: ?S
+post: (?S isa :extracli.ksh/Script), (?S genere-v [?E]), (?S to-string-v _)"
+  [KB ?E* ?S]
+
+  (let [?C* (gensym)
+        ?M  (gensym)
+        KB-A (KshScript=>Rule-1A KB  [?E* ?C* ?M])
+        ?S  (gensym)
+        KB-B (KshScript=>Rule-1B KB-A [?C* ?M ?S])]
+    KB-B)
 )
 
 
