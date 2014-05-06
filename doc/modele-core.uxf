@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="11.5.1">
+  <zoom_level>10</zoom_level>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>630</x>
+      <y>130</y>
+      <w>180</w>
+      <h>100</h>
+    </coordinates>
+    <panel_attributes>DonneesFacturationSAP
+--
+AAAA : String
+MM : String
+date-dispo : Date
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>60</x>
+      <y>130</y>
+      <w>160</w>
+      <h>150</h>
+    </coordinates>
+    <panel_attributes>ExportBO
+--
+env : String
+type-BO : String
+client-name : String
+AAAA : String
+MM : String
+part-name : String
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>350</x>
+      <y>130</y>
+      <w>160</w>
+      <h>150</h>
+    </coordinates>
+    <panel_attributes>DocInstanceBO
+--
+env : String
+type-BO : String
+client-name : String
+AAAA : String
+MM : String
+date-dispo : Date</panel_attributes>
+    <additional_attributes/>
+  </element>
+</diagram>

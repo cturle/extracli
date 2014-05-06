@@ -23,8 +23,11 @@ post: (?C isa :extracli.ksh/Cmd), (?C genere ?E), (?C pgr _), (?C arg-v _)"
  out: [?C], ?M
 post: (?C :isa Cmd), (?C pgr _), (?C arg-v _)
       (?M :isa Mapping), (?M :in [?C]), (?M :kb-relation :genere), (?M :out [?E])"
+
   [KB ?E* ?C* ?M]
+
 (comment
+
   (KshCmd=>Rule-1 KB ?E
 "in : ?E
  pre: (?E isa ExportBO), (?E env _), (?E type-BO _), (?E client-name _), (?E AAAA _), (?E MM _), (?E type-flux _)
@@ -35,12 +38,15 @@ post: (?C isa :extracli.ksh/Cmd), (?C genere ?E), (?C pgr _), (?C arg-v _)")
   )
 
 (defn KshScript=>Rule-1B
+
 "in : [?C], ?M
  pre: (?C :isa Cmd), (?C pgr _), (?C arg-v _)
       (?M :isa Mapping), (?M :in [?C]), (?M :kb-relation :genere), (?M :out [?E])
  out: ?S
 post: (?S :isa Script), (?S :genere-v [?E]), (?S to-string-v _)"
+
   [KB ?C* ?M ?S]
+
 (comment
 
   (Cmd=>Rule-1 KB ?C
@@ -62,17 +68,17 @@ post: (?S to-string-v _)")
 "in : ?S
  pre: (?S isa Script), (?S cmd-v [?C]), (?C genere _)
  out: ?M
-post: (?M :isa Mapping), (?M :in [?C]), (?M :kb-relation :genere), (?M :out [?G])
+post: (?M :isa Mapping), (?M :input [?C]), (?M :kb-relation :genere), (?M :output [?G])
       (?S genere-v [?G])")
 
   )
   )
 
 (defn KshScript=>Rule-1
-"in : [?E]
- pre: (?E isa ExportBO), (?E env _), (?E type-BO _), (?E client-name _), (?E AAAA _), (?E MM _), (?E type-flux _)
- out: ?S
-post: (?S isa :extracli.ksh/Script), (?S genere-v [?E]), (?S to-string-v _)"
+  "  in: [?E]
+    pre: (?E isa ExportBO), (?E env _), (?E type-BO _), (?E client-name _), (?E AAAA _), (?E MM _), (?E type-flux _)
+    out: ?S
+   post: (?S isa :extracli.ksh/Script), (?S genere-v [?E]), (?S to-string-v _)"
   [KB ?E* ?S]
 
   (let [?C* (gensym)
@@ -83,37 +89,34 @@ post: (?S isa :extracli.ksh/Script), (?S genere-v [?E]), (?S to-string-v _)"
     KB-B)
 )
 
+;;; DonneesFacturationSAP
 
-;;; app-generators
-(comment
-(defn out-getBO [flux]
-  (let [CLI          (flux=>client flux)
-        FLUX         (str (join "-" ["ECL" CLI (flux=>type flux)])) ]
-    (map #(join " " ["./tgetBO.ksh" %1 "$AAAA" "$MM" CLI FLUX "$env"])
-         (flux=>typesBO flux) )))
+(defn DonneesFacturationSAP=>Rule-1
+  "  in: [?E]
+    pre: {?E  {isa Execution, executable VF06, AAAA ?AAAA, MM ?MM}}
+    out: [?DF]
+   post: {?E  {genere ?DF}
+          ?DF {isa DonneesFacturationSAP, AAAA ?AAAA, MM ?MM}}"
 
-(defn out-getBOsRe7case [jour liste-flux]
-  (concat [(str indent jour ")" "  " (out-getBO (first liste-flux)))]
-          (map #(str indent indent %1)
-               (mapcat out-getBO (rest liste-flux)) )
-          [(str indent indent ";;"), ""] ))
+  [KB, ?E ?DF]
+  ; todo easy
+  )
 
 
-(defn out-getBOsRe7 []
-  (concat ["#!/bin/ksh", "# set -xv", "",
-           "jour=$1"
-           "env=$2",
-           "AAAAMM=$(date +%Y%m -d \"$(date +%Y%m)03 1 month ago\")"
-           "AAAA=${AAAAMM:0:4}"
-           "MM=${AAAAMM:4:2}", ""]
-          ["case $jour in", ""]
-          (out-getBOsRe7case "lundi" re7-lundi)
-          ["        *)      echo \"EXIT=ERREUR: jour de re7 inconnu\""
-           "                exit 1;"
-           "                ;;"
-           "esac", ""]
-          ["exit 0;"] ))
-)
+;;; DocInstanceBO
+
+(defn DocInstanceBO=>Rule-1
+  "  in: [?DF, ?DI]
+    pre: {?DF {isa DonneesFacturationSAP, AAAA ?AAAA, MM ?MM, date-dispo ?D}
+         {?DI {isa DocInstanceBO, type-BO _, AAAA ?AAAA, MM ?MM}}
+    out: []
+   post: {?DI {date-dispo ?D}}"
+
+  [KB ?DF ?DI]
+  ; todo easy
+  )
+
+
 
 
 

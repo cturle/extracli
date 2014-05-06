@@ -12,6 +12,15 @@
 ;)
 
 (comment
+  (defRequest
+" in: [?E]
+ pre: {?E {:isa :DocInstanceBO, :type-BO :_ :AAAA :_ :MM :_}}
+ out: []
+post: {?E {:date-dispo :_}}"
+  [KB ?E] )
+)
+
+(comment
 
   (def KB-0 (atom {}))
 
