@@ -6,10 +6,11 @@
 
 ; (KshCmd=>Rule-1 {1 {:isa :ExportBO :env "rec" :type-BO "028" :client-name "ACA" :AAAA "2013" :MM "10" :type-flux "I"}, 2 {:isa :none}} 1 2)
 (defn KshCmd=>Rule-1
-"args: ?E, ?C
- pre: (?E isa ExportBO), (?E env _), (?E type-BO _), (?E client-name _), (?E AAAA _), (?E MM _), (?E type-flux _)
-      (?C isa :none)
-post: (?C isa :extracli.ksh/Cmd), (?C genere ?E), (?C pgr _), (?C arg-v _)"
+  "  in: ?E
+    pre: {?E {isa ExportBO, env _, type-BO _, client-name _, AAAA _, MM _, type-flux _}}
+    out: ?C
+   post: {?C {isa extracli.ksh/Cmd, genere ?E, ?C pgr _, arg-v _}}"
+
   [KB ?E ?C]
   (let [E (get KB ?E)]
     (assoc KB ?C {:isa     :extracli.ksh/Cmd
@@ -17,14 +18,15 @@ post: (?C isa :extracli.ksh/Cmd), (?C genere ?E), (?C pgr _), (?C arg-v _)"
                   :genere  ?E
                   :arg-v [(:type-BO E) (:AAAA E) (:MM E) (:client-name E) (str "ECL-" (:client-name E) "-" (:type-flux E)) (:env E)]} )))
 
-(defn KshScript=>Rule-1A
-"in : [?E]
- pre: (?E isa ExportBO), (?E env _), (?E type-BO _), (?E client-name _), (?E AAAA _), (?E MM _), (?E type-flux _)
- out: [?C], ?M
-post: (?C :isa Cmd), (?C pgr _), (?C arg-v _)
-      (?M :isa Mapping), (?M :in [?C]), (?M :kb-relation :genere), (?M :out [?E])"
 
-  [KB ?E* ?C* ?M]
+(def KshScript=>Rule-1A
+  "  in: [?E]
+    pre: {?E {isa ExportBO, env _, type-BO _, client-name _, AAAA _, MM _, type-flux _}}
+    out: [?C]
+   post: {?C {isa extracli.ksh/Cmd, genere ?E, ?C pgr _, arg-v _}}"
+
+  (Mapping=>Rule2 KB+ :KshCmd=>Rule-1 :KshScript=>Rule-1A)
+)
 
 (comment
 
@@ -35,7 +37,7 @@ post: (?C :isa Cmd), (?C pgr _), (?C arg-v _)
 post: (?C isa :extracli.ksh/Cmd), (?C genere ?E), (?C pgr _), (?C arg-v _)")
 
   )
-  )
+
 
 (defn KshScript=>Rule-1B
 
@@ -115,7 +117,6 @@ post: (?M :isa Mapping), (?M :input [?C]), (?M :kb-relation :genere), (?M :outpu
   [KB ?DF ?DI]
   ; todo easy
   )
-
 
 
 

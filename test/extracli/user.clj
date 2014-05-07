@@ -18,7 +18,18 @@
  out: []
 post: {?E {:date-dispo :_}}"
   [KB ?E] )
+
+ ; (User=>Action-2 {1 {:isa :Extraction, :client-name "MAC", :type-flux "C", :AAAA "2012", :MM "06"} 2 {:isa :none}} 1)
+ (defAction Action-2
+   "  in: ?E
+     pre: {?E {isa Extraction, client-name _, type-flux _, AAAA _, MM _}}
+     out: ?S
+    post: {?S {isa KshScript, generate* ?E, to-string-v _}}"
+   )
+
 )
+
+
 
 (comment
 

@@ -4,8 +4,18 @@
 ;(?s when ?when)
 ;(?what update ?r)
 
-;(?d isa DocBoExtracli")
-;(?d depend-des-sources-de-donnée* _)
+
+(def KB0
+  {1000 {:isa DocumentBO, :name "ECL_Italie_BO051", :type-BO "051" :data-source-v [2000]}
+   2000 {:isa CubeBW, :name "ZMGENLEDG/Z_ZMGENLEDG_Q001", :description "Comptabilté générale"} } )
+
+
+
+
+
+
+
+
 
 ;; représentation par atom
 (defn new-flux
@@ -74,4 +84,11 @@
 
 
  (def all-trends (range 0 10))
+
+
+
+
+
+
+
 

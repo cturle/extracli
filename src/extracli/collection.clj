@@ -18,15 +18,15 @@
   )
 
 (defn Mapping=>Rule-2
-  "  in: ?A, ?R, [?I]
-    pre: {?A :isa Action, :fn _, :in ?varX, :out ?varY, :post {:isa Constraint, :x ?varX, :kb-relation ?R, :y ?varY}}
-    out: ?M, [?O]
-   post: (?M :isa Mapping), (?M :kb-relation ?R), (?M :input [?I]), (?M :output [?O])"
+  "  in: [?A, ?R, [?I]]
+    pre: {?A {isa Action, fn _, in ?varX, out ?varY, post {isa Constraint, x ?varX, kb-relation ?R, y ?varY}}}
+    out: [?M, [?O]]
+   post: {M {isa Mapping, kb-relation ?R, input [?I], output [?O]}}"
 
 [KB ?A]
   (let [A  (get KB ?A)
         FN (:fn A) ]
-    (assoc KB ?M {:isa ::Mapping, :kb-relation ?R, :input ?C, :output ?C2})
+    ;(assoc KB ?M {:isa ::Mapping, :kb-relation ?R, :input ?C, :output ?C2})
     )
   )
 
