@@ -1,9 +1,10 @@
 (ns extracli.collection)
 
 
+
 ; (Mapping=>Rule-1 {1 {:isa :none}, :isa {:isa :Relation}, 3 {:isa ::Collection, :value [:isa 3]}, 4 {:isa :none}} :isa 3 1 4)
 (defn Mapping=>Rule-1
-  "  in: [?R, ?C]
+  "  in: [?R ?C]
     pre: {?R {isa Relation}
           ?C {isa Collection, value [?V]}
           ?V {?R _} }
@@ -18,15 +19,36 @@
   )
 
 (defn Mapping=>Rule-2
-  "  in: [?A, ?R, [?I]]
-    pre: {?A {isa Action, fn _, in ?varX, out ?varY, post {isa Constraint, x ?varX, kb-relation ?R, y ?varY}}}
-    out: [?M, [?O]]
-   post: {M {isa Mapping, kb-relation ?R, input [?I], output [?O]}}"
+  "  in: ?A
+    pre: {?A  {isa Action, in ?varX, pre ?PRE, out ?varY, post ?POST, fn ?F}}
+    out: ?A2
+   post: {?A2 {isa Action, in [?varX], pre ?PRE, out [?varY], post ?POST, fn _}}"
 
-[KB ?A]
-  (let [A  (get KB ?A)
-        FN (:fn A) ]
-    ;(assoc KB ?M {:isa ::Mapping, :kb-relation ?R, :input ?C, :output ?C2})
-    )
-  )
+  [KB ?A ?A2]
+  (let [A     (get KB ?A)
+        A2-F  (fn [KB0 X-v Y-v]
+                (reduce (fn [KB [X Y]] ((:fn A) KB X Y)) KB0 (map vector X-v Y-v)) )]
+    (assoc KB ?A2 {:isa :Action, :in [(:in A)], :pre (:pre A), :out [(:out A)], :post (:post A), :fn A2-F}) ))
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
