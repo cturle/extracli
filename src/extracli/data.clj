@@ -1,31 +1,79 @@
-;(BW-prod referentiel ?r)
-;(?s isa Schedule)
-;(?s what ?what)
-;(?s when ?when)
-;(?what update ?r)
+(ns extracli.data)
+
+;;; DocumentBO
+(def idxDBO (atom 2000))
+(def DBO026 (swap! idxDBO inc))
+(def DBO051 (swap! idxDBO inc))
+
+;;; Flux
+(def idxFlux (atom 3000))
+(def ECL-IKA-E (swap! idxFlux inc))
+(def ECL-IKA-I (swap! idxFlux inc))
+
+;;; Types transformation
+(def idxTX (atom 4000))
+(def TX-F96-E (swap! idxTX inc))
+(def TX-F96-I (swap! idxTX inc))
+
+;;; Types BO
+(def idxTBO (atom 5000))
+(def TBO-027 (swap! idxTBO inc))
+(def TBO-028 (swap! idxTBO inc))
+(def TBO-030 (swap! idxTBO inc))
+(def TBO-051 (swap! idxTBO inc))
+
+;;; Types enregistrement
+(def idxTE (atom 6000))
+(def TE-F96-D (swap! idxTE inc))
+(def TE-F96-T (swap! idxTE inc))
+
+;;; CubeBW
+(def idxCubeBW (atom 7000))
+(def CubeBW001 (swap! idxCubeBW inc))
+(def CubeBW002 (swap! idxCubeBW inc))
+(def CubeBW003 (swap! idxCubeBW inc))
+(def CubeBW004 (swap! idxCubeBW inc))
+(def CubeBW005 (swap! idxCubeBW inc))
+(def CubeBW006 (swap! idxCubeBW inc))
+(def CubeBW007 (swap! idxCubeBW inc))
+
 
 
 (def KB0
-  {1000 {:isa DocumentBO, :name "ECL_Italie_BO051", :type-BO "051" :data-source-v [2000]}
-   2000 {:isa CubeBW, :name "ZMGENLEDG/Z_ZMGENLEDG_Q001", :description "Comptabilté générale"} } )
+  {;;; DocumentBO
+   DBO026 {:isa DocumentBO, :type-BO TBO-026 :data-source-v [CubeBW002, CubeBW003, CubeBW004, CubeBW005, CubeBW006, CubeBW007]}
+   DBO051 {:isa DocumentBO, :name "ECL_Italie_BO051", :type-BO TBO-051 :data-source-v [CubeBW001]}
 
+   ;;; CubeBW
+   CubeBW001 {:isa CubeBW, :name "ZMGENLEDG/Z_ZMGENLEDG_Q001", :description "Comptabilté générale"}
+   CubeBW002 {:isa CubeBW, :name "ZMEXTRACT/ZSD_C01",          :description "facture vente"}
+   CubeBW003 {:isa CubeBW, :name "ZMEXTRACT/ZCRM_PRI",         :description "mandatement"}
+   CubeBW004 {:isa CubeBW, :name "ZMEXTRACT/ZCRM_CASE",        :description "dossier"}
+   CubeBW005 {:isa CubeBW, :name "ZMEXTRACT/ZCSRV_C02",        :description "contrat"}
+   CubeBW006 {:isa CubeBW, :name "ZMEXTRACT/ZCSRV_C01",        :description "mission"}
+   CubeBW007 {:isa CubeBW, :name "ZMEXTRACT/ZSD_C12",          :description "commande vente"}
 
+   ;;; Flux
+   ECL-IKA-E {:isa Flux, :client "IKA" :type "E" :tx TX-F96-E :description "frais externes"}
+   ECL-IKA-I {:isa Flux, :client "IKA" :type "I" :tx TX-F96-I :description "frais internes"}
 
+   ;;; TX
+   TX-F96-E {:isa TX, :name "TX-F96-E", :BO-TE-v [[TBO-027, TE-F96-D], [TBO-030, TE-F96-T]]}
+   TX-F96-I {:isa TX, :name "TX-F96-I", :BO-TE-v [[TBO-028, TE-F96-D]]}
 
+   ;;; Types BO
+   TBO-026  {:isa typeBO, :name "026"}
+   TBO-027  {:isa typeBO, :name "027"}
+   TBO-028  {:isa typeBO, :name "028"}
+   TBO-030  {:isa typeBO, :name "030"}
+   TBO-051  {:isa typeBO, :name "051"}
 
+   ;;; TEs
+   TE-F96-D {:isa TE}
+   TE-F96-T {:isa TE}
 
+   })
 
-
-
-;; représentation par atom
-(defn new-flux
-  []
-  (new-flux {})
-  [value]
-  (atom value) )
-
-(defn update-flux [flux value]
-  (reset! flux value) )
 
 
 ;;; données
