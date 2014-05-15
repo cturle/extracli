@@ -3,6 +3,9 @@
 ;;; DocumentBO
 (def idxDBO (atom 2000))
 (def DBO026 (swap! idxDBO inc))
+(def DBO027 (swap! idxDBO inc))
+(def DBO028 (swap! idxDBO inc))
+(def DBO030 (swap! idxDBO inc))
 (def DBO051 (swap! idxDBO inc))
 
 ;;; Flux
@@ -42,6 +45,9 @@
 (def KB0
   {;;; DocumentBO
    DBO026 {:isa DocumentBO, :type-BO TBO-026 :data-source-v [CubeBW002, CubeBW003, CubeBW004, CubeBW005, CubeBW006, CubeBW007]}
+   DBO027 {:isa DocumentBO, :type-BO TBO-027}
+   DBO028 {:isa DocumentBO, :type-BO TBO-028}
+   DBO030 {:isa DocumentBO, :type-BO TBO-030}
    DBO051 {:isa DocumentBO, :name "ECL_Italie_BO051", :type-BO TBO-051 :data-source-v [CubeBW001]}
 
    ;;; CubeBW
@@ -54,8 +60,8 @@
    CubeBW007 {:isa CubeBW, :name "ZMEXTRACT/ZSD_C12",          :description "commande vente"}
 
    ;;; Flux
-   ECL-IKA-E {:isa Flux, :client "IKA" :type "E" :tx TX-F96-E :description "frais externes"}
-   ECL-IKA-I {:isa Flux, :client "IKA" :type "I" :tx TX-F96-I :description "frais internes"}
+   ECL-IKA-E {:isa Flux, :client "IKA" :type "E" :tx TX-F96-E :DBO-v [DBO027, DBO030] :description "frais externes"}
+   ECL-IKA-I {:isa Flux, :client "IKA" :type "I" :tx TX-F96-I :DBO-v [DBO028] :description "frais internes"}
 
    ;;; TX
    TX-F96-E {:isa TX, :name "TX-F96-E", :BO-TE-v [[TBO-027, TE-F96-D], [TBO-030, TE-F96-T]]}
@@ -91,39 +97,6 @@
 (def VIV-I (new-flux {:client "VIV", :type "I", :typesBO ["028"]}))
 
 
-(def all-flux (atom {}))
-
-(defflux AMA C {:typesBO ["015"]})
-=> (set-or-update-flux '[AMA C] {:typesBO ["015"]})
-==>
-
-(flux AMA C)
-
-(defn get-flux
-"Récupère le flux identifié par son nom de client [string C] et son [type-flux TE].
-"
-  [[C TE]]
-==> (get all-flux '[AMA E] (throw (str "flux unknown : id-flux = " id-flux)))
-
-
-(defflux AMA D)
-(defflux AMA M)
-(defflux ECA C)
-(defflux ECA D)
-(defflux ECA M)
-(defflux MAC C)
-(defflux MAC D)
-(defflux MAC M)
-(defflux MAI C)
-(defflux MAI D)
-(defflux MAI M)
-(defflux MAM C)
-(defflux MAM D)
-(defflux MAM M)
-(defflux PNP E)
-(defflux PNP I)
-
-
 (def re7-lundi [ACA-E, ACA-I, ACT-E, ACT-I, AED-I, ATL-C, ATL-D, VIV-E, VIV-I])
 
 (def flux-jeudi (atom [(flux AMA D), (flux AMA M), (flux ECA C), (flux ECA D), (flux ECA M), (flux MAC C), (flux MAC D),
@@ -131,7 +104,7 @@
                        (flux PNP E), (flux PNP I) ]))
 
 
- (def all-trends (range 0 10))
+(def all-trends (range 0 10))
 
 
 

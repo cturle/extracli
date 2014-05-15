@@ -4,24 +4,6 @@
   <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>660</x>
-      <y>180</y>
-      <w>160</w>
-      <h>150</h>
-    </coordinates>
-    <panel_attributes>DocInstanceBO
---
-env : String
-type-BO : String
-client-name : String
-AAAA : String
-MM : String
-date-dispo : Date</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <type>com.umlet.element.Class</type>
-    <coordinates>
       <x>130</x>
       <y>180</y>
       <w>120</w>
@@ -32,25 +14,6 @@ date-dispo : Date</panel_attributes>
 pgr : String
 arg* : [String]
 to-string : String</panel_attributes>
-    <additional_attributes/>
-  </element>
-  <element>
-    <type>com.umlet.element.Class</type>
-    <coordinates>
-      <x>380</x>
-      <y>180</y>
-      <w>160</w>
-      <h>150</h>
-    </coordinates>
-    <panel_attributes>ExportBO
---
-env : String
-type-BO : String
-client-name : String
-AAAA : String
-MM : String
-part-name : String
-</panel_attributes>
     <additional_attributes/>
   </element>
 </diagram>

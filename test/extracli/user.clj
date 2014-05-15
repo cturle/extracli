@@ -11,6 +11,18 @@
 ;   (out-getBOs-M-1 re7-lundi)
 ;)
 
+
+; (let [[KB1, CMD] (action-003 KB0 "MAC" "C")] (:to-string CMD))
+(comment
+(defAction action-003
+  :in-v [?CLI ?TF]
+  :pre  {?FL {:isa Flux, :client-name ?CLI, :type-flux ?TF}}
+  :out  ?CMD
+  :post {?CMD {:isa Cmd, :to-string _, :generate-one ?E, :output-to "log.txt"}
+         ?E   {:isa Extraction, :flux ?FL, :AAAA "2012" :MM "05" :env rec} }
+  ))
+
+
 (comment
   (defRequest
 " in: [?E]
@@ -26,9 +38,7 @@ post: {?E {:date-dispo :_}}"
      out: ?S
     post: {?S {isa KshScript, generate* ?E, to-string-v _}}"
    )
-
 )
-
 
 
 (comment
