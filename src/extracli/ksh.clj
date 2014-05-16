@@ -13,6 +13,19 @@ post: (?C to-string _)"
     (assoc KB ?C (assoc C :to-string (join \space `[~(:pgr C) ~@(:arg-v C)]))) ))
 
 
+; (Cmd=>Rule-2 {1 {:isa :Cmd}} 1 "toto.txt")
+(defn Cmd=>Rule-2
+  "
+  :in-v  [?CMD ?O]
+  :pre   {?CMD {:isa Cmd, :output-to ?}
+  :out-v []
+  :post  {?CMD {:output-to ?O}}"
+
+  [KB ?CMD ?O]
+  (let [CMD  (get KB ?CMD)]
+    (assoc KB ?CMD (assoc CMD :output-to ?O)) )
+  )
+
 
 ; (Script=>Rule-1 {1 {:cmd-v [2, 3]}, 2 {:to-string "line 1"}, 3 {:to-string "line 2"}} 1)
 (defn Script=>Rule-1
