@@ -14,9 +14,26 @@
   [KB ?E ?C]
   (let [E (get KB ?E)]
     (assoc KB ?C {:isa     :extracli.ksh/Cmd
-                  :pgr     "./tgetBO.ksh"
+                  :pgr     "tgetBO.ksh"
                   :genere  ?E
                   :arg-v [(:type-BO E) (:AAAA E) (:MM E) (:client-name E) (str "ECL-" (:client-name E) "-" (:type-flux E)) (:env E)]} )))
+
+
+(defn primitive-001
+  ":in-v  [?CLI ?TFL ?AAAA ?MM ?ENV]
+   :pre   {?FL {:isa Flux, :client ?CLI, :type ?TFL} }
+   :out-1 ?CMD
+   :post  {?CMD {:isa Cmd, :generate-v ?EBO-v :pgr \"getBOsFlux.ksh\" :arg-v [?CLI ?TFL ?AAAA ?MM ?ENV]}
+           ?E   {:isa Extraction, :flux ?FL, :AAAA ?AAAA :MM ?MM :env ?ENV, :export-BO-v ?EBO-v} }"
+
+  [KB ?CLI ?TFL ?AAAA ?MM ?ENV]
+  (let [[KB1 ?CMD ?EBO-v ?E] (kb/add-concepts KB 3)
+        ?FL (kb/find KB1 {:isa ::Flux, :client ?CLI, :type ?TFL})
+        CMD {:isa :extracli.ksh/Cmd, :generate-v ?EBO-v :pgr "getBOsFlux.ksh" :arg-v [?CLI ?TFL ?AAAA ?MM ?ENV]}
+        E   {:isa ::Extraction, :flux ?FL, :AAAA ?AAAA :MM ?MM :env ?ENV, :export-BO-v ?EBO-v}
+        KB2 (assoc KB1 ?CMD CMD, ?E E) ]
+    [KB2 ?CMD] )
+  )
 
 
 (def KshScript=>Rule-1A
@@ -27,6 +44,10 @@
 
   (Mapping=>Rule2 KB+ :KshCmd=>Rule-1 :KshScript=>Rule-1A)
 )
+
+
+
+
 
 (comment
 

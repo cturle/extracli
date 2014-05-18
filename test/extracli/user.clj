@@ -18,17 +18,9 @@
   :in-v [?CLI ?TF]
   :pre  {?FL {:isa Flux, :client-name ?CLI, :type-flux ?TF}}
   :out  ?CMD
-  :post {?CMD {:isa Cmd, :to-string _, :generate-1 ?E, :output-to "log.txt"}
-         ?E   {:isa Extraction, :flux ?FL, :AAAA "2012" :MM "05" :env "rec"} }
+  :post {?CMD {:isa Cmd, :to-string _, :generate-s [?EBO], :output-to "log.txt"}
+         ?EBO {:isa ExportBO, :AAAA "2012" :MM "05" :env "rec"} }
   )
-
-(defAction action-004
-  :in-v [?E]
-  :pre  {?FL {:isa Flux, :client-name _, :type-flux _}
-         ?E  {:isa Extraction, :flux ?FL, :AAAA _ :MM _ :env _} }
-  :out  ?CMD
-  :post {?CMD {:isa Cmd, :generate-1 ?E :cmd _ :arg-v _}}
-  ))
 
 
 (comment

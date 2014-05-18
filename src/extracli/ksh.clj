@@ -10,7 +10,7 @@
 post: (?C to-string _)"
   [KB ?C]
   (let [C (get KB ?C)]
-    (assoc KB ?C (assoc C :to-string (join \space `[~(:pgr C) ~@(:arg-v C)]))) ))
+    (assoc KB ?C (assoc C :to-string (join \space `[~(str "./" (:pgr C)) ~@(:arg-v C)]))) ))
 
 
 ; (Cmd=>Rule-2 {1 {:isa :Cmd}} 1 "toto.txt")

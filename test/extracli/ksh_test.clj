@@ -4,7 +4,7 @@
 
 (deftest a-test
   (let [KB {1 {:isa   :extracli.ksh/Cmd
-               :pgr   "./tgetBO.ksh",
+               :pgr   "tgetBO.ksh",
                :arg-v ["028" "$AAAA" "$MM" "ACA" "ECL-ACA-I" "$env"]
                :output-to :none}
             2 {:isa   :extracli.ksh/Script
@@ -19,7 +19,7 @@
             6 {}
             7 {:isa :none}
             8 {:isa   :extracli.ksh/Cmd
-               :pgr   "./tgetBO.ksh",
+               :pgr   "tgetBO.ksh",
                :arg-v ["arg1" "arg2"]
                :output-to "output.txt"}
             }]
