@@ -12,7 +12,6 @@
       (is (not (exist? KB {:isa :class, :pp1 2, :pp2 "pp2", :pp3 [1 2]})))
       (is (not (exist? KB {:isa :class, :pp1 1, :pp2 "ppx", :pp3 [1 2]})))
       (is (not (exist? KB {:isa :class, :pp1 1, :pp2 "pp2", :pp3 [1 :x]})))
-      (is (not (exist? KB {:isa :class, :pp2 "pp2", :pp3 [1 2]})))
       )
   ))
 
