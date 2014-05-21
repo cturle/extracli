@@ -4,16 +4,55 @@
   <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>130</x>
-      <y>180</y>
-      <w>120</w>
-      <h>90</h>
+      <x>520</x>
+      <y>150</y>
+      <w>170</w>
+      <h>110</h>
     </coordinates>
-    <panel_attributes>KshCmd
+    <panel_attributes>Cmd
 --
 pgr : String
-arg* : [String]
+arg-v : [String]
 to-string : String</panel_attributes>
     <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>220</x>
+      <y>160</y>
+      <w>170</w>
+      <h>90</h>
+    </coordinates>
+    <panel_attributes>RedirectCmd
+--
+output-to : String
+to-string : String</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Package</type>
+    <coordinates>
+      <x>20</x>
+      <y>20</y>
+      <w>100</w>
+      <h>70</h>
+    </coordinates>
+    <panel_attributes>--
+extracli.ksh</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>360</x>
+      <y>170</y>
+      <w>180</w>
+      <h>50</h>
+    </coordinates>
+    <panel_attributes>lt=-&gt;
+r2=cmd
+m2=1</panel_attributes>
+    <additional_attributes>30;30;160;30</additional_attributes>
   </element>
 </diagram>

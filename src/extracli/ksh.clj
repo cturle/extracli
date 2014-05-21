@@ -1,42 +1,99 @@
 (ns extracli.ksh
-    (:require [clojure.string :refer [join]]))
+    (:require [clojure.string :refer [join]]
+              [extracli.kb :as kb] ))
 
 
+;;; ==== Cmd ====
 
-; (Cmd=>Rule-1 {1 {:pgr "./cmd.ksh" :arg-v ["arg1" "arg2"]}} 1)
-(defn Cmd=>Rule-1
-"args: ?C
- pre: (?C isa Cmd), (?C pgr _), (?C arg-v _)
-post: (?C to-string _)"
-  [KB ?C]
-  (let [C (get KB ?C)]
-    (assoc KB ?C (assoc C :to-string (join \space `[~(str "./" (:pgr C)) ~@(:arg-v C)]))) ))
+(defn Cmd=>create-1 "
+  :in-v   [?P [?A]]
+  :type-v {?P :string, ?A :string}
+  :out-1  ?C
+  :post   {?C {:isa ::Cmd, :pgr ?P, :arg-v [?A]}}"
+
+  [KB_pre ?P ?A*]
+  (let [[KB1 ?C] (kb/add-concepts KB_pre 1)
+        KB_post  (kb/add-properties KB_pre ?C {:isa ::Cmd, :pgr ?P, :arg-v ?A*}) ]
+    [KB_post ?C] ))
 
 
-; (Cmd=>Rule-2 {1 {:isa :Cmd}} 1 "toto.txt")
-(defn Cmd=>Rule-2
-  "
-  :in-v  [?CMD ?O]
-  :pre   {?CMD {:isa Cmd, :output-to ?}
+(defn Cmd=>to-string-1   "
+  :in-1  ?C
+  :pre   {?C {:isa ::Cmd, :pgr ?P :arg-v ?A*}}
   :out-v []
-  :post  {?CMD {:output-to ?O}}"
+  :post  {?C {:to-string ?S}}
+  :with  {?S (join \\space (cons (str \"./\" ?P) ?A*))}"
 
-  [KB ?CMD ?O]
-  (let [CMD  (get KB ?CMD)]
-    (assoc KB ?CMD (assoc CMD :output-to ?O)) )
-  )
+  [KB_pre ?C]
+  (let [C_pre   (get KB_pre ?C)
+        ?P      (get C_pre :pgr)
+        ?A*     (get C_pre :arg-v)
+        ?S      (join \space (cons (str "./" ?P) ?A*))
+        C_post  (assoc C_pre :to-string ?S)
+        KB_post (assoc KB_pre ?C C_post) ]
+    [KB_post] ))
 
 
-; (Script=>Rule-1 {1 {:cmd-v [2, 3]}, 2 {:to-string "line 1"}, 3 {:to-string "line 2"}} 1)
-(defn Script=>Rule-1
-"args: ?S
- pre: (?S isa Script), (?S cmd-v [?C]), (?C to-string _)
-post: (?S to-string-v _)"
-  [KB ?S]
-  (let [S  (get KB ?S)
-        C* (for [?C (:cmd-v S)] (get KB ?C)) ]
-    (assoc KB ?S (assoc S :to-string-v `["#!/bin/ksh", "# set -xv", "", ~@(for [C C*] (:to-string C)), "", "exit 0;"])) ))
+; ==== RedirectCmd ====
 
+(defn RedirectCmd=>create-1  "
+  :in-v    [?C ?O]
+  :pre     {?C {:isa ::Cmd}}
+  :type-v  {?O :string}
+  :out-v   [?R]
+  :post    {?R {:isa ::RedirectCmd, :cmd ?C, :output-to ?O}}"
+
+  [KB_pre ?C ?O]
+  (let [[KB1 ?R]  (kb/add-concepts KB_pre 1)
+        KB_post   (kb/add-properties KB1 ?R {:isa ::RedirectCmd, :cmd ?C, :output-to ?O}) ]
+    [KB_post ?R] ))
+
+
+(defn RedirectCmd=>to-string-1  "
+  :in-v   [?R]
+  :pre    {?R {:isa ::RedirectCmd, :cmd ?C, :output-to ?O}
+           ?C {:isa ::Cmd, :to-string ?S}}
+  :type-v {?R :concept, ?O :string}
+  :out-v  []
+  :post   {?R {:to-string ?S2}}
+  :with   {?S2 (str ?S \" > \" ?O)}"
+
+  [KB_pre ?R]
+  (let [?C       (get-in KB_pre [?R :cmd])
+        ?O       (get-in KB_pre [?R :output-to])
+        ?S       (get-in KB_pre [?C :to-string])
+        ?S2      (str ?S " > " ?O)
+        KB_post  (kb/add-properties KB_pre ?R {:to-string ?S2}) ]
+    [KB_post]
+    ))
+
+
+; ==== Script ====
+
+(defn Script=>create-1 "
+  :in-1  [?C]
+  :pre   {?C {:isa ::Cmd}}
+  :out-1 ?S
+  :post  {?S {:isa ::Script, :cmd-v [?C]}}"
+
+  [KB_pre ?C*]
+  (let [[KB1 ?S] (kb/add-concepts KB_pre 1)
+        KB_post  (kb/add-properties KB_pre ?S {:isa ::Script, :cmd-v ?C*}) ]
+    [KB_post ?S] ))
+
+(defn Script=>to-string-1 "
+  :in-1  ?S
+  :pre   {?S  {:isa ::Script, :cmd-v [?C]}
+          ?C  {:to-string ?CS} }
+  :out-v []
+  :post: {?S  {:to-string-v ?SS}}"
+
+  [KB_pre ?S]
+  (let [?C*     (get-in KB_pre [?S :cmd-v])
+        ?CS*    (for [?C ?C*] (get-in KB_pre [?C :to-string]))
+        ?SS     (concat ["#!/bin/ksh", "# set -xv", ""] ?CS* ["", "exit 0;"])
+        KB_post (kb/add-properties KB_pre ?S {:to-string-v ?SS}) ]
+    [KB_post] ))
 
 
 ; (Script=>Rule-2 {1 {:cmd-v [2 3]}, 2 {:genere 4}, 3 {:genere 5}} 1)
@@ -50,16 +107,6 @@ post: (?S genere-v [?G])"
         C*  (for [?C ?C*] (get KB ?C))
         ?G* (for [C C*] (:genere C))]
     (assoc KB ?S (assoc S :genere-v ?G*)) ))
-
-
-
-; (Script=>Rule-3 {1 {:isa ::Cmd}, 2 {:isa ::Cmd}, 3 {:isa :none}} 3 [1 2])
-(defn Script=>Rule-3
-"args: ?S [?C]
- pre: (?C isa Cmd), (?S isa :none)
-post: (?S isa Script), (?S cmd-v [?C])"
-  [KB ?S ?C*]
-  (assoc KB ?S {:isa ::Script, :cmd-v ?C*}) )
 
 
 
