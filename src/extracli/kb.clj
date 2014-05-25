@@ -16,10 +16,19 @@ INIT is a map of concepts, where keys are numbers (ids) and values are map of pr
 
 ; (exist? (new-kb {1 {:isa :class, :pp1 1, :pp2 "pp2", :pp3 [1 2], :pp4 :other-property}}) {:isa :class, :pp1 1, :pp2 "pp2", :pp3 [1 2]})
 (defn exist?
-  "returns true iff it exists an object in knowledge base KB1 with properties PPs"
+  "returns true iff it exists an object in knowledge base KB with properties PPs"
   [KB PPs]
   (some (fn [C] (subset? (set PPs) (set C)))
         (vals KB) ))
+
+
+; (get-by-properties (new-kb {1 {:isa :class, :pp1 1, :pp2 "pp2", :pp3 [1 2], :pp4 :other-property}}) {:isa :class, :pp1 1, :pp2 "pp2", :pp3 [1 2]})
+(defn get-by-properties
+  "returns the id of an object in knowledge base KB matching properties PPs"
+  [KB PPs]
+  (let [match?       (fn [[C_ID C_PPs]] (subset? (set PPs) (set C_PPs)))
+        [C_ID C_PPs] (first (filter match? KB))]
+    C_ID ))
 
 
 ; (add-concepts (new-kb) 2)

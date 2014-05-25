@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <diagram program="umlet" version="11.5.1">
-  <zoom_level>10</zoom_level>
+  <zoom_level>9</zoom_level>
   <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>870</x>
+      <x>783</x>
       <y>270</y>
-      <w>180</w>
-      <h>100</h>
+      <w>162</w>
+      <h>90</h>
     </coordinates>
     <panel_attributes>DonneesFacturationSAP
 --
@@ -20,27 +20,27 @@ date-dispo : Date
   <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>340</x>
+      <x>306</x>
       <y>270</y>
-      <w>160</w>
-      <h>280</h>
+      <w>144</w>
+      <h>252</h>
     </coordinates>
     <panel_attributes>ExportBO
 --
 client-name : String
 AAAA : String
 MM : String
-part-name : String
+
 </panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>620</x>
+      <x>558</x>
       <y>270</y>
-      <w>160</w>
-      <h>150</h>
+      <w>144</w>
+      <h>135</h>
     </coordinates>
     <panel_attributes>DocInstanceBO
 --
@@ -55,31 +55,31 @@ date-dispo : Date</panel_attributes>
   <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>50</x>
-      <y>100</y>
-      <w>160</w>
-      <h>320</h>
+      <x>45</x>
+      <y>117</y>
+      <w>144</w>
+      <h>288</h>
     </coordinates>
     <panel_attributes>Extraction
 --
 AAAA : String
 MM : String
 env : String
-part-name : String
+
 </panel_attributes>
     <additional_attributes/>
   </element>
   <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>340</x>
-      <y>110</y>
-      <w>160</w>
-      <h>90</h>
+      <x>306</x>
+      <y>126</y>
+      <w>144</w>
+      <h>81</h>
     </coordinates>
     <panel_attributes>Flux
 --
-client : String
+client-name : String
 type : String
 
 </panel_attributes>
@@ -88,35 +88,35 @@ type : String
   <element>
     <type>com.umlet.element.Relation</type>
     <coordinates>
-      <x>180</x>
-      <y>100</y>
-      <w>180</w>
-      <h>70</h>
+      <x>162</x>
+      <y>117</y>
+      <w>161</w>
+      <h>63</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
 flux</panel_attributes>
-    <additional_attributes>160;50;30;50</additional_attributes>
+    <additional_attributes>144;45;27;45</additional_attributes>
   </element>
   <element>
     <type>com.umlet.element.Relation</type>
     <coordinates>
-      <x>180</x>
-      <y>260</y>
-      <w>180</w>
-      <h>70</h>
+      <x>162</x>
+      <y>261</y>
+      <w>161</w>
+      <h>63</h>
     </coordinates>
     <panel_attributes>lt=-&gt;
 export-BO
 m2=*</panel_attributes>
-    <additional_attributes>30;50;160;50</additional_attributes>
+    <additional_attributes>27;45;144;45</additional_attributes>
   </element>
   <element>
     <type>com.umlet.element.Class</type>
     <coordinates>
-      <x>620</x>
-      <y>450</y>
-      <w>160</w>
-      <h>100</h>
+      <x>558</x>
+      <y>432</y>
+      <w>144</w>
+      <h>90</h>
     </coordinates>
     <panel_attributes>DocBO
 --
@@ -128,13 +128,13 @@ date-dispo : Date</panel_attributes>
   <element>
     <type>com.umlet.element.Relation</type>
     <coordinates>
-      <x>470</x>
-      <y>430</y>
-      <w>170</w>
-      <h>70</h>
+      <x>423</x>
+      <y>414</y>
+      <w>152</w>
+      <h>63</h>
     </coordinates>
     <panel_attributes>lt=&lt;-
 doc-BO</panel_attributes>
-    <additional_attributes>150;50;30;50</additional_attributes>
+    <additional_attributes>135;45;27;45</additional_attributes>
   </element>
 </diagram>

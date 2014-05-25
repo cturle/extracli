@@ -1,7 +1,42 @@
 (ns extracli.core
-    (:require [extracli.ksh   :refer :all]
+    (:require [extracli.kb    :as kb]
+              [extracli.ksh   :as ksh]
               [clojure.string :refer [join]]) )
 
+
+
+(comment
+  :in-1  ?ECL
+  :pre   {?ECL   {:isa :ecl/Extraction, :flux ?FL :AAAA ?AAAA :MM ?MM :env ?ENV, :exportBO-v ?EBO-v}
+          ?FL    {:isa :ecl/Flux, :client-name ?CLI :type ?TFL} }
+  :out-1 ?C
+  :post  {?C     {:isa :ksh/Cmd, :genere-v ?EBO-v :pgr "tgetBOsFlux.ksh" :arg-v [?CLI ?TFL ?AAAA ?MM ?ENV]}}
+  )
+(defn KshCmd=>create-1
+  [KB_pre ?ECL]
+  (let [[KB1 ?C] (kb/add-concepts KB_pre 1)
+        ?EBO-v   (get-in KB1 [?ECL :exportBO-v])
+        ?FL      (get-in KB1 [?ECL :flux])
+        ?CLI     (get-in KB1 [?FL  :client-name])
+        ?TFL     (get-in KB1 [?FL  :type])
+        ?AAAA    (get-in KB1 [?ECL :AAAA])
+        ?MM      (get-in KB1 [?ECL :MM])
+        ?ENV     (get-in KB1 [?ECL :env])
+        KB_post  (kb/add-properties KB1 ?C {:isa :ksh/Cmd, :genere-v ?EBO-v :pgr "tgetBOsFlux.ksh" :arg-v [?CLI ?TFL ?AAAA ?MM ?ENV]})]
+    [KB_post ?C] ))
+
+(comment
+  :in-v  [?FL ?AAAA ?MM ?ENV]
+  :pre   {?FL {:isa ::Flux}}
+  :out-1 ?ECL
+  :post  {?ECL {:isa ::Extraction, :flux ?FL :AAAA ?AAAA :MM ?MM :env ?ENV, :exportBO-v ?EBO-v}}
+  )
+(defn Extraction=>create-1
+  [KB_pre ?FL ?AAAA ?MM ?ENV]
+  (let [[KB_-1 ?ECL ?EBO-v] (kb/add-concepts KB_pre 2)
+        KB_post             (kb/add-properties KB_-1 ?ECL {:isa ::Extraction, :flux ?FL :AAAA ?AAAA :MM ?MM :env ?ENV, :exportBO-v ?EBO-v})]
+    [KB_post ?ECL]
+    ))
 
 
 ; (KshCmd=>Rule-1 {1 {:isa :ExportBO :env "rec" :type-BO "028" :client-name "ACA" :AAAA "2013" :MM "10" :type-flux "I"}, 2 {:isa :none}} 1 2)
@@ -17,35 +52,6 @@
                   :pgr     "tgetBO.ksh"
                   :genere  ?E
                   :arg-v [(:type-BO E) (:AAAA E) (:MM E) (:client-name E) (str "ECL-" (:client-name E) "-" (:type-flux E)) (:env E)]} )))
-
-
-(defn primitive-001
-  ":in-v  [?CLI ?TFL ?AAAA ?MM ?ENV]
-   :pre   {?FL {:isa Flux, :client ?CLI, :type ?TFL} }
-   :out-1 ?CMD
-   :post  {?CMD {:isa Cmd, :generate-v ?EBO-v :pgr \"getBOsFlux.ksh\" :arg-v [?CLI ?TFL ?AAAA ?MM ?ENV]}
-           ?E   {:isa Extraction, :flux ?FL, :AAAA ?AAAA :MM ?MM :env ?ENV, :export-BO-v ?EBO-v} }"
-
-  [KB ?CLI ?TFL ?AAAA ?MM ?ENV]
-  (let [[KB1 ?CMD ?EBO-v ?E] (kb/add-concepts KB 3)
-        ?FL (kb/find KB1 {:isa ::Flux, :client ?CLI, :type ?TFL})
-        CMD {:isa :extracli.ksh/Cmd, :generate-v ?EBO-v :pgr "getBOsFlux.ksh" :arg-v [?CLI ?TFL ?AAAA ?MM ?ENV]}
-        E   {:isa ::Extraction, :flux ?FL, :AAAA ?AAAA :MM ?MM :env ?ENV, :export-BO-v ?EBO-v}
-        KB2 (assoc KB1 ?CMD CMD, ?E E) ]
-    [KB2 ?CMD] )
-  )
-
-
-(def KshScript=>Rule-1A
-  "  in: [?E]
-    pre: {?E {isa ExportBO, env _, type-BO _, client-name _, AAAA _, MM _, type-flux _}}
-    out: [?C]
-   post: {?C {isa extracli.ksh/Cmd, genere ?E, ?C pgr _, arg-v _}}"
-
-  (Mapping=>Rule2 KB+ :KshCmd=>Rule-1 :KshScript=>Rule-1A)
-)
-
-
 
 
 
