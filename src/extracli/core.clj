@@ -75,6 +75,7 @@ post: (?C isa :extracli.ksh/Cmd), (?C genere ?E), (?C pgr _), (?C arg-v _)")
 post: (?S :isa Script), (?S :genere-v [?E]), (?S to-string-v _)"
 
   [KB ?C* ?M ?S]
+  )
 
 (comment
 
@@ -101,7 +102,7 @@ post: (?M :isa Mapping), (?M :input [?C]), (?M :kb-relation :genere), (?M :outpu
       (?S genere-v [?G])")
 
   )
-  )
+
 
 (defn KshScript=>Rule-1
   "  in: [?E]

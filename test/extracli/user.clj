@@ -4,26 +4,19 @@
             [extracli.core :as ecl]
             [extracli.data :as data]))
 
-; (require '[extracli.core :refer :all])
-
-;;; re7-lundi
-
-;(spitln "tgetBOsRe7-lundi.ksh"
-;   (out-getBOs-M-1 re7-lundi)
-;)
-
 
 ; (let [[KB1, ?RC] (action-001 data/KB0 "MAC" "D")] (:to-string (get KB1 ?RC)))
 ;   => "./tgetBOsFlux.ksh MAC D 2012 05 rec > log.txt"
-; (let [[KB1, ?RC] (action-001 data/KB0 "MAC" "B")] KB1)
-  (comment
+;
+; (let [[KB1, ?RC] (action-001 data/KB0 "MAC" "D")] KB1)
+(comment
   :in-v   [?CLI ?TF]
   :pre    {?FL {:isa :ecl/Flux, :client-name ?CLI, :type-flux ?TF}}
   :out-1  ?RC
   :post   {?RC    {:isa :ksh/RedirectCmd, :cmd ?C, :output-to "log.txt", :to-string ?S}
            ?C     {:isa :ksh/Cmd, :genere-v ?EBO-v}
            ?ECL   {:isa :ecl/Extraction, :flux ?FL :AAAA "2012" :MM "05" :env "rec", :exportBO-v ?EBO-v} }
-  )
+)
 (defn action-001 [KB_pre ?CLI ?TF]
   (let [?FL           (kb/get-by-properties         KB_pre {:isa :ecl/Flux, :client-name ?CLI, :type ?TF})
         [KB_-4 ?ECL]  (ecl/Extraction=>create-1     KB_pre ?FL "2012" "05" "rec")
