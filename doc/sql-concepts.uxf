@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<diagram program="umlet" version="11.5.1">
+  <zoom_level>10</zoom_level>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>30</x>
+      <y>80</y>
+      <w>140</w>
+      <h>260</h>
+    </coordinates>
+    <panel_attributes>Command
+--
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>280</x>
+      <y>100</y>
+      <w>140</w>
+      <h>40</h>
+    </coordinates>
+    <panel_attributes>String</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>140</x>
+      <y>70</y>
+      <w>160</w>
+      <h>70</h>
+    </coordinates>
+    <panel_attributes>lt=-&gt;
+syntax</panel_attributes>
+    <additional_attributes>30;50;140;50</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>280</x>
+      <y>160</y>
+      <w>140</w>
+      <h>90</h>
+    </coordinates>
+    <panel_attributes>Table
+--
+name : String
+</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>140</x>
+      <y>150</y>
+      <w>160</w>
+      <h>70</h>
+    </coordinates>
+    <panel_attributes>lt=-&gt;
+table</panel_attributes>
+    <additional_attributes>30;50;140;50</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>280</x>
+      <y>280</y>
+      <w>140</w>
+      <h>40</h>
+    </coordinates>
+    <panel_attributes>Effect</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>140</x>
+      <y>250</y>
+      <w>160</w>
+      <h>70</h>
+    </coordinates>
+    <panel_attributes>lt=-&gt;
+effect</panel_attributes>
+    <additional_attributes>30;50;140;50</additional_attributes>
+  </element>
+  <element>
+    <type>com.umlet.element.Class</type>
+    <coordinates>
+      <x>490</x>
+      <y>280</y>
+      <w>140</w>
+      <h>40</h>
+    </coordinates>
+    <panel_attributes>Update</panel_attributes>
+    <additional_attributes/>
+  </element>
+  <element>
+    <type>com.umlet.element.Relation</type>
+    <coordinates>
+      <x>390</x>
+      <y>270</y>
+      <w>120</w>
+      <h>50</h>
+    </coordinates>
+    <panel_attributes>lt=&lt;&lt;-</panel_attributes>
+    <additional_attributes>30;30;100;30</additional_attributes>
+  </element>
+</diagram>

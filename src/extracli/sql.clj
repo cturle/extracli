@@ -2,6 +2,14 @@
     (:require [extracli.kb :as kb]) )
 
 
+; SQL permet la gestion et l'interrogation des bases de données.
+; Une base de données peut être considérée comme une table à deux dimensions, dont les colonnes sont les champs et les lignes
+; sont les tuples.
+
+; == BUT ==
+; la representation-textuelle de la sql/command qui permettra de Update le contenu de la sql/TableCell C001 avec la valeur "_VIDE"
+
+
 ; données encodées d'une certaine manière
 ; le but cherche ces données mais indexées différement
 ; Comment faire le lien
