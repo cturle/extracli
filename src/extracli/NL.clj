@@ -33,6 +33,10 @@
         ?X    {:isa ?D, ?REL ?Y} }
  :post {?Y    {:isa ?R}} }
 
+{:pre  {?DefR {:isa DefRange= :dom ?D :rel ?REL :range= ?Y}
+        ?X    {:isa ?D} }
+ :post {?X    {?REL ?Y}} }
+
 {:pre  {?S {:genl ?G}
         ?X {:isa ?S} }
  :post {?X {:isa ?G}} }
