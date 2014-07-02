@@ -1,3 +1,11 @@
+; === Principes ===
+; un concept est soit un "the ? of ?" soit un "the ? val ?". Ce qui en fait sa définition.
+; une et une seule définition par concept
+; suppression d'un concept => supprimer les liens (C-the/of/val->?) et les concepts (? -of-> C)
+;   impossible si il existe des concepts (? -the-> C)
+; une première phase de compréhension permet de définir les liens sémantiques issus de l'interprétation
+
+
 (The Number "10")
 => ; fonction clj 'The'
 (C01 ^det The ^type Number)
@@ -98,9 +106,12 @@
 ; F1 = Fraction dont R1 est la representation-conceptuelle-of
 
 
+; "le nombre 10"
 
+; "la somme de 1 + 2", "la somme de 2 + 1", "le nombre 3"
 
-
+; "1X34", valeur de X ?, réponse 2 car (inc 1 2), (inc 2 3), (inc 3 4)
+;
 
 
 
